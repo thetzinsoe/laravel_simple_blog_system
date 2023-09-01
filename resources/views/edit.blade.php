@@ -14,9 +14,15 @@
                 @csrf
                 <input type="hidden" name="postId" value="{{$data['id']}}">
                 <label for="title" class="form-label mt-3">Title</label>
-                <input type="text" class="form-control mb-3" id="title" name="postTitle" placeholder="Enter Title..." value="{{$data['title']}}">
+                <input type="text" class="form-control @error('postTitle') is-invalid @enderror" id="title" name="postTitle" placeholder="Enter Title..." value="{{old('postTitle',$data['title'])}}">
+                @error('postTitle')
+                    <small class="invalid-feedback">{{$message}}</small><br>
+                @enderror
                 <label for="description" class="form-label">Description</label>
-                <textarea name="postDescription" id="description" cols="30" rows="10" class="form-control mt-3">{{$data['description']}}</textarea>
+                <textarea name="postDescription" id="description" cols="30" rows="10" class="form-control mt-3 @error('postDescription') is-invalid @enderror">{{old('postDescription',$data['description'])}}</textarea>
+                @error('postDescription')
+                <small class="invalid-feedback">{{$message}}</small>
+                @enderror
                 <input type="submit" value="update" class="btn btn-small btn-dark float-end my-3">
             </form>
         </div>{{-- @dd($data); --}}

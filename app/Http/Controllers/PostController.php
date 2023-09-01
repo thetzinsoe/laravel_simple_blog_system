@@ -11,8 +11,8 @@ class PostController extends Controller
     public function create()
     {
         $datas = Post::orderBy('updated_at','desc')->paginate(3);
-        // dd($datas->total());
-        // dd($datas);
+        // dd($datas->first());
+        // dd(($datas)->first()->created_at);
         return view('create',compact('datas'));
     }
     public function postCreate(Request $request)
@@ -39,17 +39,12 @@ class PostController extends Controller
 
     public function postSeemore($id)
     {
-        $data = Post::where('id',$id)->first()->toarray();
+        $data = Post::where('id',$id)->first();
         // dd($data['title']);
         return view('seemore',compact('data'));
     }
     public function postUpdate(Request $request)
     {
-        // Validator::make($request->all(), [
-        //     'postTitle' => 'required',
-        //     'postDescription' => 'required',
-        // ])->validate();
-        // dd($request->all());
         $this->checkFormInput($request);
         $id = $request['postId'];
         $updateData = $this->getPostData($request);
@@ -69,20 +64,18 @@ class PostController extends Controller
     // for form validation
     private function checkFormInput($data)
     {
-        echo "i am valildator.....";
-        // dd(($data)->all());
-        // $validationRule = [
-        //     'postTitle' => 'required|min:5|unique:posts,title',
-        //     'postDescription' => 'required|min:5',
-        // ];
-        // $validationMessage = [
-        //     'postTitle.unique' => 'ခေါင်းစဥ် တူနေပါသည်။ ထပ်မံ၍ ကြိုးစားပါ။'
-        // ];
-        // Validator::make($data->all(),$validationRule, $validationMessage)->validate();
-        Validator::make($data->all(), [
-            'postTitle' => 'required',
-            'postDescription' => 'required',
-        ])->validate();
+        $validationRule = [
+            'postTitle' => 'required|min:5|unique:posts,title',
+            'postDescription' => 'required|min:5',
+        ];
+        $validationMessage = [
+            'postTitle.unique' => 'ခေါင်းစဥ် တူနေပါသည်။ ထပ်မံ၍ ကြိုးစားပါ။'
+        ];
+        Validator::make($data->all(),$validationRule, $validationMessage)->validate();
+        // Validator::make($data->all(), [
+        //     'postTitle' => 'required',
+        //     'postDescription' => 'required',
+        // ])->validate();
     }
 }
 

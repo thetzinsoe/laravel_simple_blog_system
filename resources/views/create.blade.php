@@ -65,11 +65,13 @@
                 </div>
             @endfor --}}
             @foreach ($datas as $data)
+            {{-- @dd(($data)->first()->created_at) --}}
                 <div class="card mb-2">
                     <div class="card-body">
                         <div class="d-flex justify-content-between">
                             <h3 class="card-title">{{$data->title}}</h3>
-                            {{-- <div>{{$date->format('Y-m-d');}}</div> --}}
+                            {{-- @$data->crated_atdd($data->first()->created_at) --}}
+                            <div>{{$data->first()->created_at->format('d-m-Y')}}</div>
                         </div>
                         <p>{{ Str::words($data->description, 25, ' . . . .')}}</p>
                         <div class="d-flex justify-content-end">
@@ -79,7 +81,7 @@
                                     @method('delete')
                                     <button type="submit" class="btn btn-danger text-white mx-1">Delete<i class="fa fa-trash"></i></button>
                                 </form>
-                                <form action="{{route('post#seemore',$data->id)}}" method="POST">
+                                <form action="{{route('post#seemore',$data->id)}}" method="get">
                                     @csrf
                                     <input type="submit" class="btn btn-primary" value="Read more&gt;&gt;">
                                 </form>
