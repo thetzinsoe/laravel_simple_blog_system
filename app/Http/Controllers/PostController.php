@@ -42,10 +42,14 @@ class PostController extends Controller
         $data = Post::where('id',$id)->first();
         // dd($data['title']);
         return view('seemore',compact('data'));
+
     }
     public function postUpdate(Request $request)
     {
-        $this->checkFormInput($request);
+        Validator::make($request->all(), [
+            'postTitle' => 'required|min:5',
+            'postDescription' => 'required|min:5|unique:posts,description',
+        ])->validate();
         $id = $request['postId'];
         $updateData = $this->getPostData($request);
         Post::where('id',$id)->update($updateData);

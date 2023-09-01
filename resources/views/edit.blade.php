@@ -6,10 +6,11 @@
 <div class="row">
     <div class="col-6 offset-3 shadow-sm">
         <div class="m-4">
-            <form action="{{route('post#seemore',$data['id'])}}" method="POST">
+            {{-- <form action="{{route('post#seemore'))}}" method="get">
                 @csrf
                 <input type="submit" class="btn btn-dark btn-sm text-white" value="&lt; back">
-            </form>
+            </form> --}}
+            <a href="{{route('post#seemore',$data['id'])}}" class="btn btn-dark btn-sm text-white">&lt; back</a>
             <form action="{{route('post#update' )}}" method="post">
                 @csrf
                 <input type="hidden" name="postId" value="{{$data['id']}}">

@@ -1,7 +1,7 @@
 @extends('master')
 
 @section('content')
-{{-- @dd($data['description']) --}}
+{{-- @dd($data) --}}
 <div class="m-5">
     <div class="row">
         <div class="col-6 offset-3 shadow-sm">
