@@ -11,7 +11,7 @@
                 <input type="submit" class="btn btn-dark btn-sm text-white" value="&lt; back">
             </form> --}}
             <a href="{{route('post#seemore',$data['id'])}}" class="btn btn-dark btn-sm text-white">&lt; back</a>
-            <form action="{{route('post#update' )}}" method="post">
+            <form action="{{route('post#update' )}}" method="post" enctype="multipart/form-data">
                 @csrf
                 <input type="hidden" name="postId" value="{{$data['id']}}">
                 <label for="title" class="form-label mt-3">Title</label>
@@ -19,10 +19,21 @@
                 @error('postTitle')
                     <small class="invalid-feedback">{{$message}}</small><br>
                 @enderror
-                <label for="description" class="form-label">Description</label>
-                <textarea name="postDescription" id="description" cols="30" rows="10" class="form-control mt-3 @error('postDescription') is-invalid @enderror">{{old('postDescription',$data['description'])}}</textarea>
+                <label for="description" class="form-label mt-3">Description</label>
+                <textarea name="postDescription" id="description" cols="30" rows="10" class="form-control @error('postDescription') is-invalid @enderror">{{old('postDescription',$data['description'])}}</textarea>
                 @error('postDescription')
                 <small class="invalid-feedback">{{$message}}</small>
+                @enderror
+                @if ($data['image'])
+                @if (Storage::get('public/'.$data['image']))
+                <img src="{{asset('storage/'.$data['image'])}}" class="mt-3 img-thumbnail" alt="">
+                @else
+                    <img src="{{asset('storage/'.'img_not_found.png')}}" class="mt-3 img-thumbnail" alt="">
+                @endif
+                @endif
+                <input type="file" name="postImage" class="form-control @error('postImage') is-invalid @enderror" id="image" placeholder="aaa">
+                @error('postImage')
+                    <small class="invalid-feedback">{{$message}}</small>
                 @enderror
                 <input type="submit" value="update" class="btn btn-small btn-dark float-end my-3">
             </form>
